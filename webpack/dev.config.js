@@ -1,6 +1,5 @@
 const merge = require('webpack-merge')
 const base = require('./base.config')
-const path = require('path')
 const webpack = require('webpack')
 
 module.exports = merge(base, {
@@ -9,7 +8,7 @@ module.exports = merge(base, {
     publicPath: '/'
   },
   devServer: {
-    contentBase: path.resolve(__dirname, '../dist'),
+    contentBase: './dist',
     historyApiFallback: true,
     compress: true,
     port: 9000,
@@ -37,10 +36,5 @@ module.exports = merge(base, {
       }
     ]
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
-  resolve: {
-    alias: {
-      'react-dom': '@hot-loader/react-dom'
-    }
-  }
+  plugins: [new webpack.HotModuleReplacementPlugin()]
 })

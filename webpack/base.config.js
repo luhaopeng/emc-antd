@@ -1,11 +1,12 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const tsImportPluginFactory = require('ts-import-plugin')
 const path = require('path')
 
 module.exports = {
   target: 'web',
   context: path.resolve(__dirname, '../'),
-  entry: ['@babel/polyfill', path.resolve(__dirname, '../src/index.js')],
+  entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: '[name]_[hash].js'
@@ -13,10 +14,26 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(t|j)sx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: true,
+          getCustomTransformers: () => ({
+            before: [
+              tsImportPluginFactory({
+                libraryName: 'antd',
+                libraryDirectory: 'es',
+                style: true
+              })
+            ]
+          }),
+          compilerOptions: {
+            module: 'es2015'
+          }
+        }
       },
+      { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
       {
         test: /\.(png|jpg|gif)$/i,
         use: [
@@ -33,10 +50,10 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '../static/template.html')
+      template: './static/template.html'
     })
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.json']
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
   }
 }

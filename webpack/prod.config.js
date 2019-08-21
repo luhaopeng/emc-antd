@@ -30,10 +30,5 @@ module.exports = merge(base, {
       }
     ]
   },
-  plugins: [new CleanWebpackPlugin()],
-  optimization: {
-    splitChunks: {
-      chunks: 'all'
-    }
-  }
+  plugins: [new CleanWebpackPlugin()]
 })
