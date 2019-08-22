@@ -50,7 +50,8 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
-      template: './static/template.html'
+      favicon: path.resolve(__dirname, '../static/favicon.ico'),
+      template: path.resolve(__dirname, '../static/template.html')
     })
   ],
   resolve: {
