@@ -1,11 +1,13 @@
 import { Icon, Menu } from 'antd'
-import React, { ReactElement } from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 const { SubMenu } = Menu
 
 interface IMenuItem {
   key: string
   text: string
+  link?: string
   icon?: string
   children?: IMenuItem[]
 }
@@ -86,8 +88,10 @@ export default class HLMenu extends React.Component<IMenuProp, IMenuState> {
     } else {
       return (
         <Menu.Item key={item.key}>
-          {item.icon ? <Icon type={item.icon} /> : null}
-          <span>{item.text}</span>
+          <Link to={item.link ? item.link : '/'}>
+            {item.icon ? <Icon type={item.icon} /> : null}
+            <span>{item.text}</span>
+          </Link>
         </Menu.Item>
       )
     }
