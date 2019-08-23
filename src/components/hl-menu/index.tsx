@@ -102,7 +102,9 @@ export default class HLMenu extends React.Component<IMenuProp, IMenuState> {
     const latestOpenKey = openKeys.find(
       key => this.state.openKeys.indexOf(key) === -1
     )
-    if (latestOpenKey && this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+    if (!latestOpenKey) {
+      this.setState({ openKeys })
+    } else if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
       // 这是在原有展开菜单项中的子项
       this.setState({ openKeys })
     } else {
