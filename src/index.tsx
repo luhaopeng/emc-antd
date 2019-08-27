@@ -1,4 +1,4 @@
-import { Breadcrumb, Icon, Layout } from 'antd'
+import { Avatar, Button, Dropdown, Icon, Layout, Menu } from 'antd'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Link } from 'react-router-dom'
@@ -319,6 +319,24 @@ class App extends React.Component<{}, IAppState> {
         text: '运维分析'
       }
     ]
+    const userDropdown = (
+      <Menu onClick={this.hUserClick}>
+        <Menu.Item key='user:info'>
+          <Icon type='user' />
+          个人信息
+        </Menu.Item>
+        <Menu.Item key='user:mod'>
+          <Icon type='lock' />
+          修改密码
+        </Menu.Item>
+        <Menu.Divider />
+        <Menu.Item key='user:logout'>
+          <Icon type='logout' />
+          退出登录
+        </Menu.Item>
+      </Menu>
+    )
+
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Layout.Sider collapsed={this.state.collapsed} width={240}>
@@ -331,15 +349,26 @@ class App extends React.Component<{}, IAppState> {
           <HLMenu collapsed={this.state.collapsed} menu={menu} />
         </Layout.Sider>
         <Layout>
-          <Layout.Header style={{ background: '#fff', padding: 0 }}>
-            <Icon
-              className='trigger'
-              type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-              onClick={this.hToggle}
-            />
+          <Layout.Header className='page-header'>
+            <div>
+              <Icon
+                className='trigger'
+                type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+                onClick={this.hToggle}
+              />
+              <Button shape='round' size='default'>
+                华立科技股份有限公司
+              </Button>
+            </div>
+            <Dropdown overlay={userDropdown}>
+              <a className='user-link'>
+                <Avatar src='http://resource.energyman.cn/data/res/img/frame/logo_whitebg.png' />
+                <span className='username'>皮卡丘</span>
+              </a>
+            </Dropdown>
           </Layout.Header>
           <HLRouter />
-          <Layout.Footer style={{ textAlign: 'center' }}>
+          <Layout.Footer className='page-footer'>
             Holley Inc. &copy;2019 All Rights Reserved.
           </Layout.Footer>
         </Layout>
@@ -349,6 +378,10 @@ class App extends React.Component<{}, IAppState> {
 
   private hToggle = () => {
     this.setState({ collapsed: !this.state.collapsed })
+  }
+
+  private hUserClick = ({ key }) => {
+    console.log(key)
   }
 }
 

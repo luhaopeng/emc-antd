@@ -194,7 +194,7 @@ const Homepage = (): React.ReactNode => {
   const statsValueStyle = { fontSize: '30px' }
   const cardBodyStyle = { padding: '20px 24px 8px' }
 
-  const debounce = 30
+  const debounce = 40
 
   return (
     <Layout.Content className='hl-page-wrapper'>
