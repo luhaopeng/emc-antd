@@ -44,31 +44,31 @@ const Homepage = (): React.ReactNode => {
   ]
   const dataYearElecCost = [
     {
-      cost: 3.1,
+      cost: 30000.1,
       month: '2019-01'
     },
     {
-      cost: 2.8,
+      cost: 20000.8,
       month: '2019-02'
     },
     {
-      cost: 4.4,
+      cost: 40000.4,
       month: '2019-03'
     },
     {
-      cost: 2.9,
+      cost: 20000.9,
       month: '2019-04'
     },
     {
-      cost: 3.5,
+      cost: 30000.5,
       month: '2019-05'
     },
     {
-      cost: 4.7,
+      cost: 40000.7,
       month: '2019-06'
     },
     {
-      cost: 5.1,
+      cost: 50000.1,
       month: '2019-07'
     }
   ]
@@ -136,16 +136,22 @@ const Homepage = (): React.ReactNode => {
   const usageFormatter = (value: number) => [value, '月用量']
   const costFormatter = (value: number) => [value, '月费用']
 
+  const statsValueStyle = { fontSize: '30px' }
   const cardBodyStyle = { padding: '20px 24px 8px' }
-  const cardFooterStyle = { fontSize: '14px', color: '#777' }
+
+  const debounce = 30
 
   return (
     <Layout.Content className='hl-page-wrapper'>
       <Row gutter={16} className='stats-row'>
         <Col span={6}>
           <Card bodyStyle={cardBodyStyle} bordered={false}>
-            <Statistic title='年用电量（kWh）' value={366798.07} />
-            <ResponsiveContainer width='100%' height={60}>
+            <Statistic
+              title='年用电量（kWh）'
+              value={366798.07}
+              valueStyle={statsValueStyle}
+            />
+            <ResponsiveContainer debounce={debounce} width='100%' height={46}>
               <AreaChart
                 data={dataYearElecUse}
                 margin={{
@@ -160,23 +166,22 @@ const Homepage = (): React.ReactNode => {
                 <Area
                   type='monotone'
                   dataKey='usage'
-                  stroke='#8884d8'
-                  fill='#8884d8'
+                  stroke='#955fe2'
+                  fill='#955fe2'
                 />
               </AreaChart>
             </ResponsiveContainer>
-            <Statistic
-              className='card-footer'
-              prefix='月用电量 '
-              value={26618}
-              valueStyle={cardFooterStyle}
-            />
+            <div className='card-footer'>月用电量 26,618</div>
           </Card>
         </Col>
         <Col span={6}>
           <Card bodyStyle={cardBodyStyle} bordered={false}>
-            <Statistic title='年用电费（万元）' value={54.07} />
-            <ResponsiveContainer width='100%' height={60}>
+            <Statistic
+              title='年用电费（元）'
+              value={540000.07}
+              valueStyle={statsValueStyle}
+            />
+            <ResponsiveContainer debounce={debounce} width='100%' height={46}>
               <LineChart
                 data={dataYearElecCost}
                 margin={{
@@ -189,6 +194,7 @@ const Homepage = (): React.ReactNode => {
                 <XAxis dataKey='month' hide={true} />
                 <Tooltip formatter={costFormatter} />
                 <Line
+                  dot={false}
                   type='monotone'
                   dataKey='cost'
                   stroke='#3aa0ff'
@@ -196,18 +202,17 @@ const Homepage = (): React.ReactNode => {
                 />
               </LineChart>
             </ResponsiveContainer>
-            <Statistic
-              className='card-footer'
-              prefix='月用电费 ￥'
-              value={5.1}
-              valueStyle={cardFooterStyle}
-            />
+            <div className='card-footer'>月用电费 ￥50,000.1</div>
           </Card>
         </Col>
         <Col span={6}>
           <Card bodyStyle={cardBodyStyle} bordered={false}>
-            <Statistic title='年用水量（吨）' value={597.0} />
-            <ResponsiveContainer width='100%' height={60}>
+            <Statistic
+              title='年用水量（吨）'
+              value={597.0}
+              valueStyle={statsValueStyle}
+            />
+            <ResponsiveContainer debounce={debounce} width='100%' height={46}>
               <AreaChart
                 data={dataYearWaterUse}
                 margin={{
@@ -222,23 +227,22 @@ const Homepage = (): React.ReactNode => {
                 <Area
                   type='monotone'
                   dataKey='usage'
-                  stroke='#8884d8'
-                  fill='#8884d8'
+                  stroke='#955fe2'
+                  fill='#955fe2'
                 />
               </AreaChart>
             </ResponsiveContainer>
-            <Statistic
-              className='card-footer'
-              prefix='月用水量 '
-              value={51}
-              valueStyle={cardFooterStyle}
-            />
+            <div className='card-footer'>月用水量 51</div>
           </Card>
         </Col>
         <Col span={6}>
           <Card bodyStyle={cardBodyStyle} bordered={false}>
-            <Statistic title='年用水费（元）' value={2268.6} />
-            <ResponsiveContainer width='100%' height={60}>
+            <Statistic
+              title='年用水费（元）'
+              value={2268.6}
+              valueStyle={statsValueStyle}
+            />
+            <ResponsiveContainer debounce={debounce} width='100%' height={46}>
               <LineChart
                 data={dataYearWaterCost}
                 margin={{
@@ -251,6 +255,7 @@ const Homepage = (): React.ReactNode => {
                 <XAxis dataKey='month' hide={true} />
                 <Tooltip formatter={costFormatter} />
                 <Line
+                  dot={false}
                   type='monotone'
                   dataKey='cost'
                   stroke='#3aa0ff'
@@ -258,18 +263,32 @@ const Homepage = (): React.ReactNode => {
                 />
               </LineChart>
             </ResponsiveContainer>
-            <Statistic
-              className='card-footer'
-              prefix='月用水费 ￥'
-              value={17.8}
-              valueStyle={cardFooterStyle}
-            />
+            <div className='card-footer'>月用水费 ￥17.8</div>
           </Card>
         </Col>
       </Row>
-      <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-        This is homepage.
-      </div>
+      <Card title='运行工况统计' bordered={false}>
+        <Row>
+          <Col span={4}>
+            <Statistic title='用户总数' value={18} />
+          </Col>
+          <Col span={4}>
+            <Statistic title='已欠费数' value={4} suffix={`/ ${18}`} />
+          </Col>
+          <Col span={4}>
+            <Statistic title='可催费数' value={0} suffix={`/ ${18}`} />
+          </Col>
+          <Col span={4}>
+            <Statistic title='未按时上报数' value={200}  />
+          </Col>
+          <Col span={4}>
+            <Statistic title='催费次数' value={6}  />
+          </Col>
+          <Col span={4}>
+            <Statistic title='拉闸次数' value={52}  />
+          </Col>
+        </Row>
+      </Card>
     </Layout.Content>
   )
 }
