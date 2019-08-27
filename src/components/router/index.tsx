@@ -1,6 +1,6 @@
-import { Skeleton } from 'antd'
 import React, { lazy, Suspense } from 'react'
 import { Route, Switch } from 'react-router-dom'
+import PageHoder from '../page-holder'
 
 const HLRouter = () => {
   const CompHome = lazy(() => import('../../pages/homepage'))
@@ -18,7 +18,7 @@ const HLRouter = () => {
   const CompNotFound = lazy(() => import('../../pages/not-found'))
 
   return (
-    <Suspense fallback={<Skeleton active={true} />}>
+    <Suspense fallback={<PageHoder />}>
       <Switch>
         <Route exact={true} path='/' component={CompHome} />
         <Route path='/data' component={CompData} />
