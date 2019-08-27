@@ -18,7 +18,7 @@ interface IEvent {
   user: string
 }
 
-const Homepage = (): React.ReactNode => {
+const Homepage: React.FunctionComponent = (): JSX.Element => {
   const dataYearElecUse = [
     {
       month: '2019-01',

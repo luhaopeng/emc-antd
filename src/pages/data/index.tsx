@@ -1,17 +1,33 @@
-import { Breadcrumb, Layout } from 'antd'
 import React from 'react'
+import Loadable from 'react-loadable'
+import { Route, Switch } from 'react-router-dom'
+import Loading from '../../components/page-loading'
 
-const PageData = (): React.ReactNode => {
+const PageData: React.FunctionComponent = (): JSX.Element => {
   return (
-    <Layout.Content style={{ padding: '0 50px' }}>
-      <Breadcrumb style={{ margin: '16px 0' }}>
-        <Breadcrumb.Item>User</Breadcrumb.Item>
-        <Breadcrumb.Item>Bill</Breadcrumb.Item>
-      </Breadcrumb>
-      <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-        This is data.
-      </div>
-    </Layout.Content>
+    <Switch>
+      <Route
+        path='/data/realtime'
+        component={Loadable({
+          loader: () => import('./realtime'),
+          loading: Loading
+        })}
+      />
+      <Route
+        path='/data/meter'
+        component={Loadable({
+          loader: () => import('./meter'),
+          loading: Loading
+        })}
+      />
+      <Route
+        path='/data/usage'
+        component={Loadable({
+          loader: () => import('./usage'),
+          loading: Loading
+        })}
+      />
+    </Switch>
   )
 }
 

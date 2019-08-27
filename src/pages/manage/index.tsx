@@ -1,7 +1,7 @@
 import { Breadcrumb, Layout } from 'antd'
 import React from 'react'
 
-const PageManage = (): React.ReactNode => {
+const PageManage: React.FunctionComponent = (): JSX.Element => {
   return (
     <Layout.Content style={{ padding: '0 50px' }}>
       <Breadcrumb style={{ margin: '16px 0' }}>

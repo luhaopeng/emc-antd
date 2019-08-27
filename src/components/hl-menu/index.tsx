@@ -70,7 +70,9 @@ export default class HLMenu extends React.Component<IMenuProp, IMenuState> {
     )
   }
 
-  private buildMenuItem = (item: IMenuItem): React.ReactNode => {
+  private buildMenuItem: React.FunctionComponent = (
+    item: IMenuItem
+  ): JSX.Element => {
     if (item.children) {
       return (
         <SubMenu

@@ -1,5 +1,7 @@
 import React from 'react'
+import Loadable from 'react-loadable'
 import { Route, Switch } from 'react-router-dom'
+import Loading from '../page-loading'
 
 const HLRouter = () => {
   return (
@@ -7,27 +9,87 @@ const HLRouter = () => {
       <Route
         exact={true}
         path='/'
-        component={require('../../pages/homepage').default}
+        component={Loadable({
+          loader: () => import('../../pages/homepage'),
+          loading: Loading
+        })}
       />
-      <Route path='/data' component={require('../../pages/data').default} />
+      <Route
+        path='/data'
+        component={Loadable({
+          loader: () => import('../../pages/data'),
+          loading: Loading
+        })}
+      />
       <Route
         path='/analytics'
-        component={require('../../pages/analytics').default}
+        component={Loadable({
+          loader: () => import('../../pages/analytics'),
+          loading: Loading
+        })}
       />
-      <Route path='/stats' component={require('../../pages/stats').default} />
-      <Route path='/report' component={require('../../pages/report').default} />
+      <Route
+        path='/stats'
+        component={Loadable({
+          loader: () => import('../../pages/stats'),
+          loading: Loading
+        })}
+      />
+      <Route
+        path='/report'
+        component={Loadable({
+          loader: () => import('../../pages/report'),
+          loading: Loading
+        })}
+      />
       <Route
         path='/prepaid'
-        component={require('../../pages/prepaid').default}
+        component={Loadable({
+          loader: () => import('../../pages/prepaid'),
+          loading: Loading
+        })}
       />
-      <Route path='/icm' component={require('../../pages/icm').default} />
-      <Route path='/esam' component={require('../../pages/esam').default} />
-      <Route path='/docs' component={require('../../pages/docs').default} />
-      <Route path='/manage' component={require('../../pages/manage').default} />
-      <Route path='/system' component={require('../../pages/system').default} />
+      <Route
+        path='/icm'
+        component={Loadable({
+          loader: () => import('../../pages/icm'),
+          loading: Loading
+        })}
+      />
+      <Route
+        path='/esam'
+        component={Loadable({
+          loader: () => import('../../pages/esam'),
+          loading: Loading
+        })}
+      />
+      <Route
+        path='/docs'
+        component={Loadable({
+          loader: () => import('../../pages/docs'),
+          loading: Loading
+        })}
+      />
+      <Route
+        path='/manage'
+        component={Loadable({
+          loader: () => import('../../pages/manage'),
+          loading: Loading
+        })}
+      />
+      <Route
+        path='/system'
+        component={Loadable({
+          loader: () => import('../../pages/system'),
+          loading: Loading
+        })}
+      />
       <Route
         path='/maintain'
-        component={require('../../pages/maintain').default}
+        component={Loadable({
+          loader: () => import('../../pages/maintain'),
+          loading: Loading
+        })}
       />
     </Switch>
   )

@@ -1,7 +1,7 @@
 import { Breadcrumb, Layout } from 'antd'
 import React from 'react'
 
-const PageStats: React.FunctionComponent = (): JSX.Element => {
+const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
   return (
     <Layout.Content style={{ padding: '0 50px' }}>
       <Breadcrumb style={{ margin: '16px 0' }}>
@@ -9,10 +9,10 @@ const PageStats: React.FunctionComponent = (): JSX.Element => {
         <Breadcrumb.Item>Bill</Breadcrumb.Item>
       </Breadcrumb>
       <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-        This is stats.
+        This is realtime.
       </div>
     </Layout.Content>
   )
 }
 
-export default PageStats
+export default PageDataRealtime
