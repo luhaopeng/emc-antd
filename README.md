@@ -4,7 +4,7 @@
 [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/luhaopeng/emc-antd/blob/master/LICENSE)
 
-Alteration of an old project to adopt antd.
+Alteration of an old project to adopt antd & typescript.
 
 ## consists of
 
@@ -12,7 +12,6 @@ Alteration of an old project to adopt antd.
 - [autoprefixer](https://github.com/postcss/autoprefixer)
 - [less](https://github.com/less/less.js)
 - [react](https://github.com/facebook/react)
-- [react-loadable](https://github.com/jamiebuilds/react-loadable)
 - [webpack](https://github.com/webpack/webpack)
 - [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
 
