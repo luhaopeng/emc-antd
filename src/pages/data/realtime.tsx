@@ -1,16 +1,271 @@
-import { Breadcrumb, Layout } from 'antd'
-import React from 'react'
+import {
+  Button,
+  Col,
+  Form,
+  Layout,
+  Radio,
+  Row,
+  Select,
+  Table,
+  TreeSelect
+} from 'antd'
+import { RadioChangeEvent } from 'antd/lib/radio'
+import React, { useEffect, useState } from 'react'
+import './realtime.less'
+
+const { TreeNode, SHOW_PARENT } = TreeSelect
+const { Option } = Select
+
+interface ITreeSrcItem {
+  children?: ITreeSrcItem[]
+  name: string
+}
 
 const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
+  const [unit, setUnit] = useState()
+  const [item, setItem] = useState()
+  const [energy, setEnergy] = useState('电')
+
+  const hSubmit = () => console.log('submitted')
+  const hUnitChange = (val: string) => setUnit(val)
+  const hItemChange = (val: string) => setItem(val)
+  const hEnergyChange = (e: RadioChangeEvent) => setEnergy(e.target.value)
+
+  const unitTree = [
+    {
+      children: [
+        { name: 'B1厂房' },
+        { name: 'B3厂房' },
+        { name: '物流中心' },
+        { name: 'B2厂房' },
+        { name: '宿舍' },
+        { name: '园区二级表' },
+        {
+          children: [
+            { name: '品质科' },
+            { name: 'B1厂房公共' },
+            { name: 'B1厂房返修组' },
+            { name: '采购部' },
+            { name: 'B1厂房仓库总表' },
+            { name: '包装车间' },
+            { name: 'B1厂房工艺' },
+            { name: 'B1厂房单相车间' },
+            { name: 'B2系统车间' },
+            { name: 'B2电子表三相车间' },
+            { name: 'B2海外生产' },
+            { name: 'B1厂房北区总校验' },
+            { name: 'B1厂房总照明1' },
+            { name: 'B1厂房总照明2' },
+            { name: 'B1厂房二楼总动力' },
+            { name: 'B1厂房二楼总校验' },
+            { name: 'B1三楼动力' },
+            { name: 'B1食堂动力' },
+            { name: 'B1餐梯' },
+            { name: 'B1三楼办公' },
+            { name: 'B1信息中心动力' }
+          ],
+          name: '制造平台'
+        },
+        {
+          children: [
+            { name: '华方医药' },
+            { name: '嘉禾众邦' },
+            { name: '中博光电' },
+            { name: '迪恩科技' },
+            { name: '浙大网新' },
+            { name: '天昱微创' },
+            { name: '厚达' },
+            { name: '华立能源' },
+            { name: '元麦' }
+          ],
+          name: '非制造平台'
+        },
+        { name: '大楼办公' },
+        { name: '演示箱' },
+        {
+          children: [
+            { name: '模块车间' },
+            { name: '物流' },
+            { name: '动力中心低压配电室' },
+            { name: '公共区域' },
+            { name: 'IT管理' },
+            { name: '质量部' },
+            { name: '食堂' },
+            { name: '二楼办公' },
+            { name: '成品车间' }
+          ],
+          name: '青山湖基地'
+        }
+      ],
+      name: '华立科技股份有限公司'
+    }
+  ]
+  const itemTree = [
+    {
+      children: [
+        {
+          children: [
+            { name: '正向有功表码' },
+            { name: '正向无功表码' },
+            { name: '反向有功表码' },
+            { name: '反向无功表码' },
+            { name: '组合有边表码' },
+            { name: '组合无边表码' }
+          ],
+          name: '表码'
+        },
+        {
+          children: [
+            { name: 'A相电压' },
+            { name: 'B相电压' },
+            { name: 'C相电压' }
+          ],
+          name: '电压'
+        },
+        {
+          children: [
+            { name: 'A相电流' },
+            { name: 'B相电流' },
+            { name: 'C相电流' }
+          ],
+          name: '电流'
+        },
+        {
+          children: [
+            { name: '总有功功率' },
+            { name: 'A相有功功率' },
+            { name: 'B相有功功率' },
+            { name: 'C相有功功率' },
+            { name: '总无功功率' },
+            { name: 'A相无功功率' },
+            { name: 'B相无功功率' },
+            { name: 'C相无功功率' }
+          ],
+          name: '功率'
+        },
+        {
+          children: [
+            { name: '总功率因数' },
+            { name: 'A相功率因数' },
+            { name: 'B相功率因数' },
+            { name: 'C相功率因数' }
+          ],
+          name: '功率因数'
+        }
+      ],
+      name: '全部数据项'
+    }
+  ]
+  const pointColumns = [
+    { title: '计量点', dataIndex: 'point' },
+    { title: '用能单元', dataIndex: 'unit' }
+  ]
+  const pointData = [
+    { key: 1, point: '电测室', unit: '品质科' },
+    { key: 2, point: '参观大厅', unit: 'B1厂房' },
+    { key: 3, point: '超声波清洗', unit: 'B1厂房模块车间' },
+    { key: 4, point: '老化区', unit: 'B1厂房模块车间' },
+    { key: 5, point: '喷漆房', unit: 'B1厂房模块车间' },
+    { key: 6, point: '模块调试', unit: 'B1厂房模块车间' },
+    { key: 7, point: '插件流水线', unit: 'B1厂房模块车间' },
+    { key: 8, point: '补焊区', unit: 'B1厂房模块车间' },
+    { key: 9, point: '返修校验', unit: 'B1厂房返修组' },
+    { key: 10, point: '返修动力、一楼开水器', unit: 'B1厂房返修组' },
+    { key: 11, point: 'B1立体库', unit: '采购部' },
+    { key: 12, point: '南仓库动力', unit: 'B1厂房仓库总表' }
+  ]
+
+  const treeDropdownStyle = { maxHeight: 400, overflow: 'auto' }
+
+  const buildTreeNode = (tree: ITreeSrcItem) => (
+    <TreeNode value={tree.name} title={tree.name} key={tree.name}>
+      {tree.children ? tree.children.map(buildTreeNode) : null}
+    </TreeNode>
+  )
+
+  useEffect(() => {
+    setUnit(unitTree[0].name)
+    setItem('表码')
+  }, [])
+
   return (
-    <Layout.Content style={{ padding: '0 50px' }}>
-      <Breadcrumb style={{ margin: '16px 0' }}>
-        <Breadcrumb.Item>User</Breadcrumb.Item>
-        <Breadcrumb.Item>Bill</Breadcrumb.Item>
-      </Breadcrumb>
-      <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-        This is realtime.
-      </div>
+    <Layout.Content className='page-data'>
+      <Row>
+        <Col span={6} className='realtime-section'>
+          <Form
+            labelAlign='left'
+            labelCol={{ span: 6 }}
+            wrapperCol={{ span: 18 }}
+            onSubmit={hSubmit}
+          >
+            <Form.Item label='能源类别'>
+              <Radio.Group
+                value={energy}
+                buttonStyle='solid'
+                onChange={hEnergyChange}
+              >
+                <Radio.Button value='电'>电</Radio.Button>
+                <Radio.Button value='水'>水</Radio.Button>
+              </Radio.Group>
+            </Form.Item>
+            {energy === '电' ? (
+              <Form.Item label='费率类型'>
+                <Select defaultValue='总'>
+                  <Option value=''>全部</Option>
+                  <Option value='总'>总</Option>
+                  <Option value='尖'>尖</Option>
+                  <Option value='峰'>峰</Option>
+                  <Option value='平'>平</Option>
+                  <Option value='谷'>谷</Option>
+                </Select>
+              </Form.Item>
+            ) : null}
+            <Form.Item label='数据项'>
+              <TreeSelect
+                showSearch={false}
+                value={item}
+                className='multi-tree'
+                dropdownStyle={treeDropdownStyle}
+                onChange={hItemChange}
+                treeCheckable={true}
+                showCheckedStrategy={SHOW_PARENT}
+              >
+                {buildTreeNode(itemTree[0])}
+              </TreeSelect>
+            </Form.Item>
+            <Form.Item label='上报状态'>
+              <Select defaultValue=''>
+                <Option value=''>未设置</Option>
+                <Option value='实时上报'>实时上报</Option>
+                <Option value='未实时上报'>未实时上报</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label='用能单位'>
+              <TreeSelect
+                showSearch={true}
+                value={unit}
+                dropdownStyle={treeDropdownStyle}
+                onChange={hUnitChange}
+              >
+                {buildTreeNode(unitTree[0])}
+              </TreeSelect>
+            </Form.Item>
+            <Table
+              size='middle'
+              bordered={true}
+              columns={pointColumns}
+              dataSource={pointData}
+              rowSelection={{}}
+            />
+            <div className='action-div'>
+              <Button type='primary' htmlType='submit'>
+                查询
+              </Button>
+              <Button style={{ marginLeft: 8 }}>重置</Button>
+            </div>
+          </Form>
+        </Col>
+      </Row>
     </Layout.Content>
   )
 }

@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import PageHolder from '../../components/page-holder'
+import './index.less'
 
 const PageData: React.FunctionComponent = (): JSX.Element => {
   const CompRealtime = lazy(() => import('./realtime'))
