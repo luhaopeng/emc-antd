@@ -1,6 +1,7 @@
 import { Avatar, Button, Dropdown, Icon, Layout, Menu } from 'antd'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { withRouter } from 'react-router'
 import { BrowserRouter, Link } from 'react-router-dom'
 import HLMenu from './components/hl-menu'
 import HLRouter from './components/router'
@@ -336,6 +337,7 @@ class App extends React.Component<{}, IAppState> {
         </Menu.Item>
       </Menu>
     )
+    const MenuWithRoute = withRouter(HLMenu)
 
     return (
       <Layout style={{ minHeight: '100vh' }}>
@@ -346,7 +348,7 @@ class App extends React.Component<{}, IAppState> {
               <h1>能源管理云平台</h1>
             </Link>
           </div>
-          <HLMenu collapsed={this.state.collapsed} menu={menu} />
+          <MenuWithRoute collapsed={this.state.collapsed} menu={menu} />
         </Layout.Sider>
         <Layout>
           <Layout.Header className='page-header'>

@@ -1,6 +1,6 @@
 import { Icon, Menu } from 'antd'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, RouteComponentProps } from 'react-router-dom'
 
 const { SubMenu } = Menu
 
@@ -12,7 +12,7 @@ interface IMenuItem {
   children?: IMenuItem[]
 }
 
-interface IMenuProp {
+interface IMenuProp extends RouteComponentProps {
   collapsed: boolean
   menu: IMenuItem[]
 }
@@ -54,12 +54,22 @@ export default class HLMenu extends React.Component<IMenuProp, IMenuState> {
     this.rootSubmenuKeys = props.menu.map(item => item.key)
   }
 
+  public componentDidMount() {
+    const { location } = this.props
+    const path = location.pathname.substr(1)
+    const key = path.replace(/\//g, '-')
+    const openKeys = this.findKeyPath(key)
+    this.setState({ openKeys })
+  }
+
   public render() {
-    const { menu } = this.props
+    const { menu, location } = this.props
+    const path = location.pathname.substr(1)
+    const key = path.replace(/\//g, '-')
     return (
       <Menu
         theme='dark'
-        defaultSelectedKeys={[menu[0].key]}
+        defaultSelectedKeys={[key]}
         mode='inline'
         openKeys={this.state.openKeys}
         onOpenChange={this.onOpenChange}
