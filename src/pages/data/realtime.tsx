@@ -2,6 +2,8 @@ import {
   Button,
   Col,
   Form,
+  Icon,
+  Input,
   Layout,
   Radio,
   Row,
@@ -10,6 +12,7 @@ import {
   TreeSelect
 } from 'antd'
 import { RadioChangeEvent } from 'antd/lib/radio'
+import { ColumnProps } from 'antd/lib/table'
 import React, { useEffect, useState } from 'react'
 import './realtime.less'
 
@@ -21,15 +24,31 @@ interface ITreeSrcItem {
   name: string
 }
 
+interface IPointSrcItem {
+  key: number | string
+  point: string
+  unit: string
+}
+
 const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
   const [unit, setUnit] = useState()
   const [item, setItem] = useState()
   const [energy, setEnergy] = useState('电')
+  const [selectedRowKeys, setSelectedRowKeys] = useState()
+  let searchInput: Input | null
 
   const hSubmit = () => console.log('submitted')
   const hUnitChange = (val: string) => setUnit(val)
   const hItemChange = (val: string) => setItem(val)
   const hEnergyChange = (e: RadioChangeEvent) => setEnergy(e.target.value)
+  const hSelectRow = (selectedKeys: string[] | number[] | undefined) =>
+    setSelectedRowKeys(selectedKeys)
+
+  const buildTreeNode = (tree: ITreeSrcItem) => (
+    <TreeNode value={tree.name} title={tree.name} key={tree.name}>
+      {tree.children ? tree.children.map(buildTreeNode) : null}
+    </TreeNode>
+  )
 
   const unitTree = [
     {
@@ -156,11 +175,75 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
       name: '全部数据项'
     }
   ]
-  const pointColumns = [
-    { title: '计量点', dataIndex: 'point' },
-    { title: '用能单元', dataIndex: 'unit' }
+  const pointColumns: Array<ColumnProps<IPointSrcItem>> = [
+    {
+      dataIndex: 'point',
+      filterDropdown: ({
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        clearFilters
+      }) => {
+        const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+          return (
+            setSelectedKeys &&
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          )
+        }
+        const onReset = () => clearFilters && clearFilters([])
+        return (
+          <div style={{ padding: 8 }}>
+            <Input
+              ref={node => {
+                searchInput = node
+              }}
+              placeholder='搜索 计量点'
+              value={selectedKeys && selectedKeys[0]}
+              onChange={onChange}
+              onPressEnter={confirm}
+              style={{ width: 160, marginBottom: 8, display: 'block' }}
+            />
+            <div style={{ textAlign: 'right' }}>
+              <Button
+                type='primary'
+                onClick={confirm}
+                size='small'
+                style={{ marginRight: 8 }}
+              >
+                搜索
+              </Button>
+              <Button onClick={onReset} size='small'>
+                重置
+              </Button>
+            </div>
+          </div>
+        )
+      },
+      filterIcon: (filtered: boolean) => (
+        <Icon
+          type='search'
+          style={{ color: filtered ? '#1890ff' : undefined }}
+        />
+      ),
+      onFilter: (value: string, record: IPointSrcItem) => {
+        return record.point
+          .toString()
+          .toLowerCase()
+          .includes(value.toLowerCase())
+      },
+      onFilterDropdownVisibleChange: (visible: boolean) => {
+        if (visible) {
+          setTimeout(() => searchInput && searchInput.select())
+        }
+      },
+      title: '计量点'
+    },
+    {
+      dataIndex: 'unit',
+      title: '用能单元'
+    }
   ]
-  const pointData = [
+  const pointData: IPointSrcItem[] = [
     { key: 1, point: '电测室', unit: '品质科' },
     { key: 2, point: '参观大厅', unit: 'B1厂房' },
     { key: 3, point: '超声波清洗', unit: 'B1厂房模块车间' },
@@ -177,21 +260,22 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
 
   const treeDropdownStyle = { maxHeight: 400, overflow: 'auto' }
 
-  const buildTreeNode = (tree: ITreeSrcItem) => (
-    <TreeNode value={tree.name} title={tree.name} key={tree.name}>
-      {tree.children ? tree.children.map(buildTreeNode) : null}
-    </TreeNode>
-  )
-
   useEffect(() => {
     setUnit(unitTree[0].name)
     setItem('表码')
+    setSelectedRowKeys(pointData.map(v => v.key))
   }, [])
 
   return (
     <Layout.Content className='page-data'>
       <Row>
         <Col span={6} className='realtime-section'>
+          <div className='condition-header'>
+            <h4>查询条件</h4>
+            <Button type='primary' htmlType='submit'>
+              查询
+            </Button>
+          </div>
           <Form
             labelAlign='left'
             labelCol={{ span: 6 }}
@@ -255,14 +339,8 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
               bordered={true}
               columns={pointColumns}
               dataSource={pointData}
-              rowSelection={{}}
+              rowSelection={{ selectedRowKeys, onChange: hSelectRow }}
             />
-            <div className='action-div'>
-              <Button type='primary' htmlType='submit'>
-                查询
-              </Button>
-              <Button style={{ marginLeft: 8 }}>重置</Button>
-            </div>
           </Form>
         </Col>
       </Row>
