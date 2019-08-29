@@ -14,7 +14,7 @@ import {
 import { RadioChangeEvent } from 'antd/lib/radio'
 import { ColumnProps } from 'antd/lib/table'
 import React, { useEffect, useState } from 'react'
-import './realtime.less'
+import './index.less'
 
 const { TreeNode, SHOW_PARENT } = TreeSelect
 const { Option } = Select
@@ -31,6 +31,7 @@ interface IPointSrcItem {
 }
 
 interface IDataSrcItem {
+  key: number
   point: string
   unit: string
   dataItem: string
@@ -284,6 +285,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 1548.08,
       dataItem: '正向有功表码',
+      key: 1,
       period: '1小时',
       point: '1D1进线柜',
       rate: 1,
@@ -295,6 +297,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 13.19,
       dataItem: '正向有功表码',
+      key: 2,
       period: '1小时',
       point: '1D2电容柜',
       rate: 1,
@@ -306,6 +309,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 0.32,
       dataItem: '正向有功表码',
+      key: 3,
       period: '1小时',
       point: '1D3电容柜',
       rate: 1,
@@ -317,6 +321,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 41.96,
       dataItem: '正向有功表码',
+      key: 4,
       period: '1小时',
       point: '1D4-1高配室照明',
       rate: 30,
@@ -328,6 +333,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 1.34,
       dataItem: '正向有功表码',
+      key: 5,
       period: '1小时',
       point: '1D4-2综合仓库照明',
       rate: 30,
@@ -339,6 +345,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 106.85,
       dataItem: '正向有功表码',
+      key: 6,
       period: '1小时',
       point: '1D4-3门卫消防室电源',
       rate: 30,
@@ -350,6 +357,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 67.53,
       dataItem: '正向有功表码',
+      key: 7,
       period: '1小时',
       point: '1D4-4热泵机房照明',
       rate: 30,
@@ -361,6 +369,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 1121.01,
       dataItem: '正向有功表码',
+      key: 8,
       period: '1小时',
       point: '1D4-5地源热泵机组配电4',
       rate: 100,
@@ -372,6 +381,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 1548.08,
       dataItem: '正向有功表码',
+      key: 9,
       period: '1小时',
       point: '1D1进线柜',
       rate: 1,
@@ -383,6 +393,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 13.19,
       dataItem: '正向有功表码',
+      key: 10,
       period: '1小时',
       point: '1D2电容柜',
       rate: 1,
@@ -394,6 +405,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 0.32,
       dataItem: '正向有功表码',
+      key: 11,
       period: '1小时',
       point: '1D3电容柜',
       rate: 1,
@@ -405,6 +417,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 41.96,
       dataItem: '正向有功表码',
+      key: 12,
       period: '1小时',
       point: '1D4-1高配室照明',
       rate: 30,
@@ -416,6 +429,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 1.34,
       dataItem: '正向有功表码',
+      key: 13,
       period: '1小时',
       point: '1D4-2综合仓库照明',
       rate: 30,
@@ -427,6 +441,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 106.85,
       dataItem: '正向有功表码',
+      key: 14,
       period: '1小时',
       point: '1D4-3门卫消防室电源',
       rate: 30,
@@ -438,6 +453,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 67.53,
       dataItem: '正向有功表码',
+      key: 15,
       period: '1小时',
       point: '1D4-4热泵机房照明',
       rate: 30,
@@ -449,6 +465,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 1121.01,
       dataItem: '正向有功表码',
+      key: 16,
       period: '1小时',
       point: '1D4-5地源热泵机组配电4',
       rate: 100,
@@ -460,6 +477,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 1548.08,
       dataItem: '正向有功表码',
+      key: 17,
       period: '1小时',
       point: '1D1进线柜',
       rate: 1,
@@ -471,6 +489,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 13.19,
       dataItem: '正向有功表码',
+      key: 18,
       period: '1小时',
       point: '1D2电容柜',
       rate: 1,
@@ -482,6 +501,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 0.32,
       dataItem: '正向有功表码',
+      key: 19,
       period: '1小时',
       point: '1D3电容柜',
       rate: 1,
@@ -493,6 +513,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 41.96,
       dataItem: '正向有功表码',
+      key: 20,
       period: '1小时',
       point: '1D4-1高配室照明',
       rate: 30,
@@ -504,6 +525,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 1.34,
       dataItem: '正向有功表码',
+      key: 21,
       period: '1小时',
       point: '1D4-2综合仓库照明',
       rate: 30,
@@ -515,6 +537,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 106.85,
       dataItem: '正向有功表码',
+      key: 22,
       period: '1小时',
       point: '1D4-3门卫消防室电源',
       rate: 30,
@@ -526,6 +549,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 67.53,
       dataItem: '正向有功表码',
+      key: 23,
       period: '1小时',
       point: '1D4-4热泵机房照明',
       rate: 30,
@@ -537,6 +561,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 1121.01,
       dataItem: '正向有功表码',
+      key: 24,
       period: '1小时',
       point: '1D4-5地源热泵机组配电4',
       rate: 100,
@@ -548,6 +573,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 1548.08,
       dataItem: '正向有功表码',
+      key: 25,
       period: '1小时',
       point: '1D1进线柜',
       rate: 1,
@@ -559,6 +585,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 13.19,
       dataItem: '正向有功表码',
+      key: 26,
       period: '1小时',
       point: '1D2电容柜',
       rate: 1,
@@ -570,6 +597,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 0.32,
       dataItem: '正向有功表码',
+      key: 27,
       period: '1小时',
       point: '1D3电容柜',
       rate: 1,
@@ -581,6 +609,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 41.96,
       dataItem: '正向有功表码',
+      key: 28,
       period: '1小时',
       point: '1D4-1高配室照明',
       rate: 30,
@@ -592,6 +621,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 1.34,
       dataItem: '正向有功表码',
+      key: 29,
       period: '1小时',
       point: '1D4-2综合仓库照明',
       rate: 30,
@@ -603,6 +633,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 106.85,
       dataItem: '正向有功表码',
+      key: 30,
       period: '1小时',
       point: '1D4-3门卫消防室电源',
       rate: 30,
@@ -614,6 +645,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 67.53,
       dataItem: '正向有功表码',
+      key: 31,
       period: '1小时',
       point: '1D4-4热泵机房照明',
       rate: 30,
@@ -625,6 +657,7 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     {
       data: 1121.01,
       dataItem: '正向有功表码',
+      key: 32,
       period: '1小时',
       point: '1D4-5地源热泵机组配电4',
       rate: 100,
