@@ -1,4 +1,13 @@
-import { Avatar, Button, Dropdown, Icon, Layout, Menu } from 'antd'
+import {
+  Avatar,
+  Button,
+  ConfigProvider,
+  Dropdown,
+  Icon,
+  Layout,
+  Menu
+} from 'antd'
+import zhCN from 'antd/es/locale/zh_CN'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { withRouter } from 'react-router'
@@ -6,6 +15,30 @@ import { BrowserRouter, Link } from 'react-router-dom'
 import HLMenu from './components/hl-menu'
 import HLRouter from './components/router'
 import './index.less'
+
+import dayjs from 'dayjs'
+import 'dayjs/locale/zh-cn'
+import advancedFormat from 'dayjs/plugin/advancedFormat'
+import badMutable from 'dayjs/plugin/badMutable'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+import isMoment from 'dayjs/plugin/isMoment'
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import localeData from 'dayjs/plugin/localeData'
+import weekOfYear from 'dayjs/plugin/weekOfYear'
+import weekYear from 'dayjs/plugin/weekYear'
+
+dayjs.extend(isSameOrBefore)
+dayjs.extend(isSameOrAfter)
+dayjs.extend(advancedFormat)
+dayjs.extend(customParseFormat)
+dayjs.extend(weekYear)
+dayjs.extend(weekOfYear)
+dayjs.extend(isMoment)
+dayjs.extend(localeData)
+dayjs.extend(badMutable)
+
+dayjs.locale('zh-cn')
 
 interface IAppState {
   collapsed: boolean
@@ -389,7 +422,9 @@ class App extends React.Component<{}, IAppState> {
 
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <ConfigProvider locale={zhCN}>
+      <App />
+    </ConfigProvider>
   </BrowserRouter>,
   document.getElementById('root')
 )

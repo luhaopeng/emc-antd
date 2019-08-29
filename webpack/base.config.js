@@ -55,6 +55,9 @@ module.exports = {
     })
   ],
   resolve: {
+    alias: {
+      moment: 'dayjs',
+    },
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
   }
 }
