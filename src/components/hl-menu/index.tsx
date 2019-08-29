@@ -69,7 +69,7 @@ export default class HLMenu extends React.Component<IMenuProp, IMenuState> {
     return (
       <Menu
         theme='dark'
-        defaultSelectedKeys={[key]}
+        defaultSelectedKeys={key ? [key] : ['homepage']}
         mode='inline'
         openKeys={this.state.openKeys}
         onOpenChange={this.onOpenChange}
