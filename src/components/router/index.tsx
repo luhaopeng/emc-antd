@@ -2,21 +2,21 @@ import React, { lazy, Suspense } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import PageHoder from '../page-holder'
 
-const HLRouter = () => {
-  const CompHome = lazy(() => import('../../pages/homepage'))
-  const CompData = lazy(() => import('../../pages/data'))
-  const CompAnalysis = lazy(() => import('../../pages/analytics'))
-  const CompStats = lazy(() => import('../../pages/stats'))
-  const CompReport = lazy(() => import('../../pages/report'))
-  const CompPrepaid = lazy(() => import('../../pages/prepaid'))
-  const CompIcm = lazy(() => import('../../pages/icm'))
-  const CompEsam = lazy(() => import('../../pages/esam'))
-  const CompDocs = lazy(() => import('../../pages/docs'))
-  const CompManage = lazy(() => import('../../pages/manage'))
-  const CompSystem = lazy(() => import('../../pages/system'))
-  const CompMaintain = lazy(() => import('../../pages/maintain'))
-  const CompNotFound = lazy(() => import('../../pages/not-found'))
+const CompHome = lazy(() => import('../../pages/homepage'))
+const CompData = lazy(() => import('../../pages/data'))
+const CompAnalysis = lazy(() => import('../../pages/analytics'))
+const CompStats = lazy(() => import('../../pages/stats'))
+const CompReport = lazy(() => import('../../pages/report'))
+const CompPrepaid = lazy(() => import('../../pages/prepaid'))
+const CompIcm = lazy(() => import('../../pages/icm'))
+const CompEsam = lazy(() => import('../../pages/esam'))
+const CompDocs = lazy(() => import('../../pages/docs'))
+const CompManage = lazy(() => import('../../pages/manage'))
+const CompSystem = lazy(() => import('../../pages/system'))
+const CompMaintain = lazy(() => import('../../pages/maintain'))
+const CompNotFound = lazy(() => import('../../pages/not-found'))
 
+const HLRouter = () => {
   return (
     <Suspense fallback={<PageHoder />}>
       <Switch>

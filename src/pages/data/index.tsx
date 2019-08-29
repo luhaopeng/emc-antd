@@ -3,12 +3,12 @@ import { Route, Switch } from 'react-router-dom'
 import PageHolder from '../../components/page-holder'
 import './index.less'
 
-const PageData: React.FunctionComponent = (): JSX.Element => {
-  const CompRealtime = lazy(() => import('./realtime'))
-  const CompMeter = lazy(() => import('./meter'))
-  const CompUsage = lazy(() => import('./usage'))
-  const CompNotFound = lazy(() => import('../../pages/not-found'))
+const CompRealtime = lazy(() => import('./realtime'))
+const CompMeter = lazy(() => import('./meter'))
+const CompUsage = lazy(() => import('./usage'))
+const CompNotFound = lazy(() => import('../../pages/not-found'))
 
+const PageData: React.FunctionComponent = (): JSX.Element => {
   return (
     <Suspense fallback={<PageHolder />}>
       <Switch>
