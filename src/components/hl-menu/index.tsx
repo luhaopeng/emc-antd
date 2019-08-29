@@ -55,11 +55,13 @@ export default class HLMenu extends React.Component<IMenuProp, IMenuState> {
   }
 
   public componentDidMount() {
-    const { location } = this.props
+    const { collapsed, location } = this.props
     const path = location.pathname.substr(1)
     const key = path.replace(/\//g, '-')
     const openKeys = this.findKeyPath(key)
-    this.setState({ openKeys })
+    if (!collapsed) {
+      this.setState({ openKeys })
+    }
   }
 
   public render() {
