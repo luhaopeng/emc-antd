@@ -30,6 +30,18 @@ interface IPointSrcItem {
   unit: string
 }
 
+interface IDataSrcItem {
+  point: string
+  unit: string
+  dataItem: string
+  type: string
+  rate: number
+  data: number
+  suffix: string
+  period: string
+  time: string
+}
+
 const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
   const [unit, setUnit] = useState()
   const [item, setItem] = useState()
@@ -257,6 +269,371 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
     { key: 11, point: 'B1立体库', unit: '采购部' },
     { key: 12, point: '南仓库动力', unit: 'B1厂房仓库总表' }
   ]
+  const dataColumns: Array<ColumnProps<IDataSrcItem>> = [
+    { dataIndex: 'point', title: '计量点' },
+    { dataIndex: 'unit', title: '用能单元' },
+    { dataIndex: 'dataItem', title: '数据项' },
+    { dataIndex: 'type', title: '费率' },
+    { dataIndex: 'rate', title: '倍率' },
+    { dataIndex: 'data', title: '数据值' },
+    { dataIndex: 'suffix', title: '计量单位' },
+    { dataIndex: 'period', title: '采集周期' },
+    { dataIndex: 'time', title: '最新采集时间' }
+  ]
+  const dataSrc: IDataSrcItem[] = [
+    {
+      data: 1548.08,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D1进线柜',
+      rate: 1,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 13.19,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D2电容柜',
+      rate: 1,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 0.32,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D3电容柜',
+      rate: 1,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 41.96,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-1高配室照明',
+      rate: 30,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 1.34,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-2综合仓库照明',
+      rate: 30,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 106.85,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-3门卫消防室电源',
+      rate: 30,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 67.53,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-4热泵机房照明',
+      rate: 30,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 1121.01,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-5地源热泵机组配电4',
+      rate: 100,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 1548.08,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D1进线柜',
+      rate: 1,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 13.19,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D2电容柜',
+      rate: 1,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 0.32,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D3电容柜',
+      rate: 1,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 41.96,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-1高配室照明',
+      rate: 30,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 1.34,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-2综合仓库照明',
+      rate: 30,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 106.85,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-3门卫消防室电源',
+      rate: 30,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 67.53,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-4热泵机房照明',
+      rate: 30,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 1121.01,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-5地源热泵机组配电4',
+      rate: 100,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 1548.08,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D1进线柜',
+      rate: 1,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 13.19,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D2电容柜',
+      rate: 1,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 0.32,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D3电容柜',
+      rate: 1,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 41.96,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-1高配室照明',
+      rate: 30,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 1.34,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-2综合仓库照明',
+      rate: 30,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 106.85,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-3门卫消防室电源',
+      rate: 30,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 67.53,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-4热泵机房照明',
+      rate: 30,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 1121.01,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-5地源热泵机组配电4',
+      rate: 100,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 1548.08,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D1进线柜',
+      rate: 1,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 13.19,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D2电容柜',
+      rate: 1,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 0.32,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D3电容柜',
+      rate: 1,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 41.96,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-1高配室照明',
+      rate: 30,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 1.34,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-2综合仓库照明',
+      rate: 30,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 106.85,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-3门卫消防室电源',
+      rate: 30,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 67.53,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-4热泵机房照明',
+      rate: 30,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    },
+    {
+      data: 1121.01,
+      dataItem: '正向有功表码',
+      period: '1小时',
+      point: '1D4-5地源热泵机组配电4',
+      rate: 100,
+      suffix: 'kWh',
+      time: '2019-08-28 15:45:00',
+      type: '总',
+      unit: '动力中心低压配电室'
+    }
+  ]
 
   const treeDropdownStyle = { maxHeight: 400, overflow: 'auto' }
 
@@ -268,80 +645,93 @@ const PageDataRealtime: React.FunctionComponent = (): JSX.Element => {
 
   return (
     <Layout.Content className='page-data'>
-      <Row>
-        <Col span={6} className='realtime-section'>
-          <div className='condition-header'>
-            <h4>查询条件</h4>
-            <Button type='primary' htmlType='submit'>
-              查询
-            </Button>
-          </div>
-          <Form
-            labelAlign='left'
-            labelCol={{ span: 6 }}
-            wrapperCol={{ span: 18 }}
-            onSubmit={hSubmit}
-          >
-            <Form.Item label='能源类别'>
-              <Radio.Group
-                value={energy}
-                buttonStyle='solid'
-                onChange={hEnergyChange}
-              >
-                <Radio.Button value='电'>电</Radio.Button>
-                <Radio.Button value='水'>水</Radio.Button>
-              </Radio.Group>
-            </Form.Item>
-            {energy === '电' ? (
-              <Form.Item label='费率类型'>
-                <Select defaultValue='总'>
-                  <Option value=''>全部</Option>
-                  <Option value='总'>总</Option>
-                  <Option value='尖'>尖</Option>
-                  <Option value='峰'>峰</Option>
-                  <Option value='平'>平</Option>
-                  <Option value='谷'>谷</Option>
+      <Row gutter={16}>
+        <Col span={6}>
+          <section className='realtime-section'>
+            <div className='condition-header'>
+              <h4>查询条件</h4>
+              <Button type='primary' htmlType='submit'>
+                查询
+              </Button>
+            </div>
+            <Form
+              labelAlign='left'
+              labelCol={{ span: 6 }}
+              wrapperCol={{ span: 18 }}
+              onSubmit={hSubmit}
+            >
+              <Form.Item label='能源类别'>
+                <Radio.Group
+                  value={energy}
+                  buttonStyle='solid'
+                  onChange={hEnergyChange}
+                >
+                  <Radio.Button value='电'>电</Radio.Button>
+                  <Radio.Button value='水'>水</Radio.Button>
+                </Radio.Group>
+              </Form.Item>
+              {energy === '电' ? (
+                <Form.Item label='费率类型'>
+                  <Select defaultValue='总'>
+                    <Option value=''>全部</Option>
+                    <Option value='总'>总</Option>
+                    <Option value='尖'>尖</Option>
+                    <Option value='峰'>峰</Option>
+                    <Option value='平'>平</Option>
+                    <Option value='谷'>谷</Option>
+                  </Select>
+                </Form.Item>
+              ) : null}
+              <Form.Item label='数据项'>
+                <TreeSelect
+                  showSearch={false}
+                  value={item}
+                  className='multi-tree'
+                  dropdownStyle={treeDropdownStyle}
+                  onChange={hItemChange}
+                  treeCheckable={true}
+                  showCheckedStrategy={SHOW_PARENT}
+                >
+                  {buildTreeNode(itemTree[0])}
+                </TreeSelect>
+              </Form.Item>
+              <Form.Item label='上报状态'>
+                <Select defaultValue=''>
+                  <Option value=''>未设置</Option>
+                  <Option value='实时上报'>实时上报</Option>
+                  <Option value='未实时上报'>未实时上报</Option>
                 </Select>
               </Form.Item>
-            ) : null}
-            <Form.Item label='数据项'>
-              <TreeSelect
-                showSearch={false}
-                value={item}
-                className='multi-tree'
-                dropdownStyle={treeDropdownStyle}
-                onChange={hItemChange}
-                treeCheckable={true}
-                showCheckedStrategy={SHOW_PARENT}
-              >
-                {buildTreeNode(itemTree[0])}
-              </TreeSelect>
-            </Form.Item>
-            <Form.Item label='上报状态'>
-              <Select defaultValue=''>
-                <Option value=''>未设置</Option>
-                <Option value='实时上报'>实时上报</Option>
-                <Option value='未实时上报'>未实时上报</Option>
-              </Select>
-            </Form.Item>
-            <Form.Item label='用能单位'>
-              <TreeSelect
-                showSearch={true}
-                value={unit}
-                dropdownStyle={treeDropdownStyle}
-                onChange={hUnitChange}
-              >
-                {buildTreeNode(unitTree[0])}
-              </TreeSelect>
-            </Form.Item>
+              <Form.Item label='用能单位'>
+                <TreeSelect
+                  showSearch={true}
+                  value={unit}
+                  dropdownStyle={treeDropdownStyle}
+                  onChange={hUnitChange}
+                >
+                  {buildTreeNode(unitTree[0])}
+                </TreeSelect>
+              </Form.Item>
+              <Table
+                size='middle'
+                bordered={true}
+                columns={pointColumns}
+                dataSource={pointData}
+                rowSelection={{ selectedRowKeys, onChange: hSelectRow }}
+              />
+            </Form>
+          </section>
+        </Col>
+        <Col span={18}>
+          <section className='realtime-section data-table'>
             <Table
               size='middle'
               bordered={true}
-              columns={pointColumns}
-              dataSource={pointData}
-              rowSelection={{ selectedRowKeys, onChange: hSelectRow }}
+              columns={dataColumns}
+              dataSource={dataSrc}
+              pagination={{ pageSize: 20 }}
             />
-          </Form>
+          </section>
         </Col>
       </Row>
     </Layout.Content>
