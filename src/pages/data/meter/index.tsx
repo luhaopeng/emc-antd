@@ -16,6 +16,7 @@ import { RadioChangeEvent } from 'antd/lib/radio'
 import { ColumnProps } from 'antd/lib/table'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
+import DataHisModal from '../../../components/data-his-modal'
 import './index.less'
 
 const { TreeNode, SHOW_PARENT } = TreeSelect
@@ -46,6 +47,8 @@ const PageDataMeter: React.FunctionComponent = (): JSX.Element => {
   const [item, setItem] = useState()
   const [energy, setEnergy] = useState('电')
   const [selectedRowKeys, setSelectedRowKeys] = useState()
+  const [modalVisible, setModalVisible] = useState(false)
+  const [modalPointId, setModalPointId] = useState()
   let searchInput: Input | null
 
   const hSubmit = () => console.log('submitted')
@@ -54,12 +57,24 @@ const PageDataMeter: React.FunctionComponent = (): JSX.Element => {
   const hEnergyChange = (e: RadioChangeEvent) => setEnergy(e.target.value)
   const hSelectRow = (selectedKeys: string[] | number[] | undefined) =>
     setSelectedRowKeys(selectedKeys)
+  const hModalCancel = () => setModalVisible(false)
 
   const buildTreeNode = (tree: ITreeSrcItem) => (
     <TreeNode value={tree.name} title={tree.name} key={tree.name}>
       {tree.children ? tree.children.map(buildTreeNode) : null}
     </TreeNode>
   )
+  const pointNameRenderer = (text: string, row: IDataSrcItem) => {
+    const onClick = () => {
+      setModalVisible(true)
+      setModalPointId(row.key)
+    }
+    return (
+      <a data-key={row.key} onClick={onClick}>
+        {text}
+      </a>
+    )
+  }
 
   const unitTree = [
     {
@@ -269,7 +284,7 @@ const PageDataMeter: React.FunctionComponent = (): JSX.Element => {
     { key: 12, point: '南仓库动力', unit: 'B1厂房仓库总表' }
   ]
   const dataColumns: Array<ColumnProps<IDataSrcItem>> = [
-    { dataIndex: 'point', title: '计量点' },
+    { dataIndex: 'point', title: '计量点', render: pointNameRenderer },
     { dataIndex: 'type', title: '费率' },
     { dataIndex: 'data', title: '数据值' },
     { dataIndex: 'time', title: '最新采集时间' }
@@ -600,6 +615,12 @@ const PageDataMeter: React.FunctionComponent = (): JSX.Element => {
           </section>
         </Col>
       </Row>
+      <DataHisModal
+        srcId={modalPointId}
+        visible={modalVisible}
+        onCancel={hModalCancel}
+        footer={null}
+      />
     </Layout.Content>
   )
 }
