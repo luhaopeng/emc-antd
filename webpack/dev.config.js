@@ -1,6 +1,7 @@
 const merge = require('webpack-merge')
 const base = require('./base.config')
 const webpack = require('webpack')
+const path = require('path')
 
 module.exports = merge(base, {
   mode: 'development',
@@ -8,7 +9,7 @@ module.exports = merge(base, {
     publicPath: '/'
   },
   devServer: {
-    contentBase: './dist',
+    contentBase: path.join(__dirname, '../static'),
     historyApiFallback: true,
     compress: true,
     port: 9000,

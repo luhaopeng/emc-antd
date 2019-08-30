@@ -14,8 +14,10 @@ import {
 } from 'antd'
 import { RadioChangeEvent } from 'antd/lib/radio'
 import { ColumnProps } from 'antd/lib/table'
+import axios from 'axios'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
+import { Data } from '../../../api'
 import DataHisModal from '../../../components/data-his-modal'
 import './index.less'
 
@@ -74,6 +76,10 @@ const PageDataMeter: React.FunctionComponent = (): JSX.Element => {
         {text}
       </a>
     )
+  }
+  const queryItemTree = async () => {
+    const { data } = await Data.Meter.ItemTree.query()
+    itemTree = data.data
   }
 
   const unitTree = [
@@ -145,62 +151,7 @@ const PageDataMeter: React.FunctionComponent = (): JSX.Element => {
       name: '华立科技股份有限公司'
     }
   ]
-  const itemTree = [
-    {
-      children: [
-        {
-          children: [
-            { name: '正向有功表码' },
-            { name: '正向无功表码' },
-            { name: '反向有功表码' },
-            { name: '反向无功表码' },
-            { name: '组合有边表码' },
-            { name: '组合无边表码' }
-          ],
-          name: '表码'
-        },
-        {
-          children: [
-            { name: 'A相电压' },
-            { name: 'B相电压' },
-            { name: 'C相电压' }
-          ],
-          name: '电压'
-        },
-        {
-          children: [
-            { name: 'A相电流' },
-            { name: 'B相电流' },
-            { name: 'C相电流' }
-          ],
-          name: '电流'
-        },
-        {
-          children: [
-            { name: '总有功功率' },
-            { name: 'A相有功功率' },
-            { name: 'B相有功功率' },
-            { name: 'C相有功功率' },
-            { name: '总无功功率' },
-            { name: 'A相无功功率' },
-            { name: 'B相无功功率' },
-            { name: 'C相无功功率' }
-          ],
-          name: '功率'
-        },
-        {
-          children: [
-            { name: '总功率因数' },
-            { name: 'A相功率因数' },
-            { name: 'B相功率因数' },
-            { name: 'C相功率因数' }
-          ],
-          name: '功率因数'
-        }
-      ],
-      name: '全部数据项'
-    }
-  ]
+  let itemTree = []
   const pointColumns: Array<ColumnProps<IPointSrcItem>> = [
     {
       dataIndex: 'point',
@@ -524,6 +475,10 @@ const PageDataMeter: React.FunctionComponent = (): JSX.Element => {
     setSelectedRowKeys(pointData.map(v => v.key))
   }, [])
 
+  useEffect(() => {
+    queryItemTree()
+  })
+
   return (
     <Layout.Content className='page-data'>
       <Row gutter={16}>
@@ -573,7 +528,7 @@ const PageDataMeter: React.FunctionComponent = (): JSX.Element => {
                   treeCheckable={true}
                   showCheckedStrategy={SHOW_PARENT}
                 >
-                  {buildTreeNode(itemTree[0])}
+                  {itemTree.length && buildTreeNode(itemTree[0])}
                 </TreeSelect>
               </Form.Item>
               <RangePicker
