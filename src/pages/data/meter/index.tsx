@@ -94,7 +94,7 @@ const PageDataMeter: React.FunctionComponent = (): JSX.Element => {
   const queryPointData = async () => {
     const { data } = await Data.Meter.PointData.query()
     setPointData(data.data)
-    setSelectedRowKeys(data.data.map(v => v.key))
+    setSelectedRowKeys(data.data.map((v: IPointSrcItem) => v.key))
   }
   const queryDataSrc = async () => {
     const { data } = await Data.Meter.DataSrc.query()

@@ -45,9 +45,18 @@ const Common = {
 
 const Data = {
   Meter: {
+    DataSrc: new Request('/data/meter/data-src.json', '/mock'),
     ItemTree: new Request('/data/meter/item-tree.json', '/mock'),
-    PointData: new Request('/data/meter/point-data.json', '/mock'),
-    DataSrc: new Request('/data/meter/data-src.json', '/mock')
+    PointData: new Request('/data/meter/point-data.json', '/mock')
+  },
+  RealTime: {
+    DataSrc: new Request('/data/realtime/data-src.json', '/mock'),
+    ItemTree: new Request('/data/realtime/item-tree.json', '/mock'),
+    PointData: new Request('/data/realtime/point-data.json', '/mock')
+  },
+  Usage: {
+    DataSrc: new Request('/data/usage/data-src.json', '/mock'),
+    PointData: new Request('/data/usage/point-data.json', '/mock')
   }
 }
 
