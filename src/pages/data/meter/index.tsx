@@ -14,10 +14,9 @@ import {
 } from 'antd'
 import { RadioChangeEvent } from 'antd/lib/radio'
 import { ColumnProps } from 'antd/lib/table'
-import axios from 'axios'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-import { Data } from '../../../api'
+import { Common, Data } from '../../../api'
 import DataHisModal from '../../../components/data-his-modal'
 import './index.less'
 
@@ -51,6 +50,10 @@ const PageDataMeter: React.FunctionComponent = (): JSX.Element => {
   const [selectedRowKeys, setSelectedRowKeys] = useState()
   const [modalVisible, setModalVisible] = useState(false)
   const [modalPointId, setModalPointId] = useState()
+  const [itemTree, setItemTree] = useState([])
+  const [unitTree, setUnitTree] = useState([])
+  const [pointData, setPointData] = useState([])
+  const [dataSrc, setDataSrc] = useState([])
   let searchInput: Input | null
 
   const hSubmit = () => console.log('submitted')
@@ -66,6 +69,7 @@ const PageDataMeter: React.FunctionComponent = (): JSX.Element => {
       {tree.children ? tree.children.map(buildTreeNode) : null}
     </TreeNode>
   )
+
   const pointNameRenderer = (text: string, row: IDataSrcItem) => {
     const onClick = () => {
       setModalVisible(true)
@@ -79,79 +83,24 @@ const PageDataMeter: React.FunctionComponent = (): JSX.Element => {
   }
   const queryItemTree = async () => {
     const { data } = await Data.Meter.ItemTree.query()
-    itemTree = data.data
+    setItemTree(data.data)
+    setItem('表码')
+  }
+  const queryUnitTree = async () => {
+    const { data } = await Common.UnitTree.query()
+    setUnitTree(data.data)
+    setUnit(data.data[0].name)
+  }
+  const queryPointData = async () => {
+    const { data } = await Data.Meter.PointData.query()
+    setPointData(data.data)
+    setSelectedRowKeys(data.data.map(v => v.key))
+  }
+  const queryDataSrc = async () => {
+    const { data } = await Data.Meter.DataSrc.query()
+    setDataSrc(data.data)
   }
 
-  const unitTree = [
-    {
-      children: [
-        { name: 'B1厂房' },
-        { name: 'B3厂房' },
-        { name: '物流中心' },
-        { name: 'B2厂房' },
-        { name: '宿舍' },
-        { name: '园区二级表' },
-        {
-          children: [
-            { name: '品质科' },
-            { name: 'B1厂房公共' },
-            { name: 'B1厂房返修组' },
-            { name: '采购部' },
-            { name: 'B1厂房仓库总表' },
-            { name: '包装车间' },
-            { name: 'B1厂房工艺' },
-            { name: 'B1厂房单相车间' },
-            { name: 'B2系统车间' },
-            { name: 'B2电子表三相车间' },
-            { name: 'B2海外生产' },
-            { name: 'B1厂房北区总校验' },
-            { name: 'B1厂房总照明1' },
-            { name: 'B1厂房总照明2' },
-            { name: 'B1厂房二楼总动力' },
-            { name: 'B1厂房二楼总校验' },
-            { name: 'B1三楼动力' },
-            { name: 'B1食堂动力' },
-            { name: 'B1餐梯' },
-            { name: 'B1三楼办公' },
-            { name: 'B1信息中心动力' }
-          ],
-          name: '制造平台'
-        },
-        {
-          children: [
-            { name: '华方医药' },
-            { name: '嘉禾众邦' },
-            { name: '中博光电' },
-            { name: '迪恩科技' },
-            { name: '浙大网新' },
-            { name: '天昱微创' },
-            { name: '厚达' },
-            { name: '华立能源' },
-            { name: '元麦' }
-          ],
-          name: '非制造平台'
-        },
-        { name: '大楼办公' },
-        { name: '演示箱' },
-        {
-          children: [
-            { name: '模块车间' },
-            { name: '物流' },
-            { name: '动力中心低压配电室' },
-            { name: '公共区域' },
-            { name: 'IT管理' },
-            { name: '质量部' },
-            { name: '食堂' },
-            { name: '二楼办公' },
-            { name: '成品车间' }
-          ],
-          name: '青山湖基地'
-        }
-      ],
-      name: '华立科技股份有限公司'
-    }
-  ]
-  let itemTree = []
   const pointColumns: Array<ColumnProps<IPointSrcItem>> = [
     {
       dataIndex: 'point',
@@ -220,264 +169,21 @@ const PageDataMeter: React.FunctionComponent = (): JSX.Element => {
       title: '用能单元'
     }
   ]
-  const pointData: IPointSrcItem[] = [
-    { key: 1, point: '电测室', unit: '品质科' },
-    { key: 2, point: '参观大厅', unit: 'B1厂房' },
-    { key: 3, point: '超声波清洗', unit: 'B1厂房模块车间' },
-    { key: 4, point: '老化区', unit: 'B1厂房模块车间' },
-    { key: 5, point: '喷漆房', unit: 'B1厂房模块车间' },
-    { key: 6, point: '模块调试', unit: 'B1厂房模块车间' },
-    { key: 7, point: '插件流水线', unit: 'B1厂房模块车间' },
-    { key: 8, point: '补焊区', unit: 'B1厂房模块车间' },
-    { key: 9, point: '返修校验', unit: 'B1厂房返修组' },
-    { key: 10, point: '返修动力、一楼开水器', unit: 'B1厂房返修组' },
-    { key: 11, point: 'B1立体库', unit: '采购部' },
-    { key: 12, point: '南仓库动力', unit: 'B1厂房仓库总表' }
-  ]
   const dataColumns: Array<ColumnProps<IDataSrcItem>> = [
     { dataIndex: 'point', title: '计量点', render: pointNameRenderer },
     { dataIndex: 'type', title: '费率' },
     { dataIndex: 'data', title: '数据值' },
     { dataIndex: 'time', title: '最新采集时间' }
   ]
-  const dataSrc: IDataSrcItem[] = [
-    {
-      data: 1548.08,
-      key: 1,
-      point: '1D1进线柜',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 13.19,
-      key: 2,
-      point: '1D2电容柜',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 0.32,
-      key: 3,
-      point: '1D3电容柜',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 41.96,
-      key: 4,
-      point: '1D4-1高配室照明',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 1.34,
-      key: 5,
-      point: '1D4-2综合仓库照明',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 106.85,
-      key: 6,
-      point: '1D4-3门卫消防室电源',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 67.53,
-      key: 7,
-      point: '1D4-4热泵机房照明',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 1121.01,
-      key: 8,
-      point: '1D4-5地源热泵机组配电4',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 1548.08,
-      key: 9,
-      point: '1D1进线柜',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 13.19,
-      key: 10,
-      point: '1D2电容柜',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 0.32,
-      key: 11,
-      point: '1D3电容柜',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 41.96,
-      key: 12,
-      point: '1D4-1高配室照明',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 1.34,
-      key: 13,
-      point: '1D4-2综合仓库照明',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 106.85,
-      key: 14,
-      point: '1D4-3门卫消防室电源',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 67.53,
-      key: 15,
-      point: '1D4-4热泵机房照明',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 1121.01,
-      key: 16,
-      point: '1D4-5地源热泵机组配电4',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 1548.08,
-      key: 17,
-      point: '1D1进线柜',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 13.19,
-      key: 18,
-      point: '1D2电容柜',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 0.32,
-      key: 19,
-      point: '1D3电容柜',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 41.96,
-      key: 20,
-      point: '1D4-1高配室照明',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 1.34,
-      key: 21,
-      point: '1D4-2综合仓库照明',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 106.85,
-      key: 22,
-      point: '1D4-3门卫消防室电源',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 67.53,
-      key: 23,
-      point: '1D4-4热泵机房照明',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 1121.01,
-      key: 24,
-      point: '1D4-5地源热泵机组配电4',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 1548.08,
-      key: 25,
-      point: '1D1进线柜',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 13.19,
-      key: 26,
-      point: '1D2电容柜',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 0.32,
-      key: 27,
-      point: '1D3电容柜',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 41.96,
-      key: 28,
-      point: '1D4-1高配室照明',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 1.34,
-      key: 29,
-      point: '1D4-2综合仓库照明',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 106.85,
-      key: 30,
-      point: '1D4-3门卫消防室电源',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 67.53,
-      key: 31,
-      point: '1D4-4热泵机房照明',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    },
-    {
-      data: 1121.01,
-      key: 32,
-      point: '1D4-5地源热泵机组配电4',
-      time: '2019-08-28 15:45:00',
-      type: '总'
-    }
-  ]
 
   const treeDropdownStyle = { maxHeight: 400, overflow: 'auto' }
 
   useEffect(() => {
-    setUnit(unitTree[0].name)
-    setItem('表码')
-    setSelectedRowKeys(pointData.map(v => v.key))
-  }, [])
-
-  useEffect(() => {
     queryItemTree()
-  })
+    queryUnitTree()
+    queryPointData()
+    queryDataSrc()
+  }, [])
 
   return (
     <Layout.Content className='page-data'>
@@ -545,7 +251,7 @@ const PageDataMeter: React.FunctionComponent = (): JSX.Element => {
                   dropdownStyle={treeDropdownStyle}
                   onChange={hUnitChange}
                 >
-                  {buildTreeNode(unitTree[0])}
+                  {unitTree.length && buildTreeNode(unitTree[0])}
                 </TreeSelect>
               </Form.Item>
               <Table

@@ -35,16 +35,20 @@ class Request {
       },
       option
     )
-    console.log(setting)
     return axios(setting)
   }
+}
+
+const Common = {
+  UnitTree: new Request('/common/unit-tree.json', '/mock')
 }
 
 const Data = {
   Meter: {
     ItemTree: new Request('/data/meter/item-tree.json', '/mock'),
-    PointData: new Request('/data/meter/point-data.json', '/mock')
+    PointData: new Request('/data/meter/point-data.json', '/mock'),
+    DataSrc: new Request('/data/meter/data-src.json', '/mock')
   }
 }
 
-export { Data }
+export { Common, Data }
