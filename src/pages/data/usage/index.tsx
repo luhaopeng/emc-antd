@@ -240,7 +240,7 @@ const PageDataUsage: React.FunctionComponent = (): JSX.Element => {
                   dropdownStyle={treeDropdownStyle}
                   onChange={hUnitChange}
                 >
-                  {buildTreeNode(unitTree[0])}
+                  {unitTree.length && buildTreeNode(unitTree[0])}
                 </TreeSelect>
               </Form.Item>
               <Table
