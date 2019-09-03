@@ -57,7 +57,6 @@ const PageDataUsage: React.FunctionComponent = (): JSX.Element => {
   const [dataSrc, setDataSrc] = useState([])
   let searchInput: Input | null
 
-  const hSubmit = () => console.log('submitted')
   const hUnitChange = (val: string) => setUnit(val)
   const hEnergyChange = (e: RadioChangeEvent) => setEnergy(e.target.value)
   const hSelectRow = (selectedKeys: string[] | number[] | undefined) =>
@@ -180,15 +179,12 @@ const PageDataUsage: React.FunctionComponent = (): JSX.Element => {
           <section className='usage-section'>
             <div className='condition-header'>
               <h4>查询条件</h4>
-              <Button type='primary' htmlType='submit'>
-                查询
-              </Button>
+              <Button type='primary'>查询</Button>
             </div>
             <Form
               labelAlign='left'
               labelCol={{ span: 6 }}
               wrapperCol={{ span: 18 }}
-              onSubmit={hSubmit}
             >
               <Form.Item label='能源类别'>
                 <Radio.Group
@@ -230,7 +226,7 @@ const PageDataUsage: React.FunctionComponent = (): JSX.Element => {
                   '今 天': [moment().startOf('date'), moment()],
                   '本 月': [moment().startOf('month'), moment().endOf('month')]
                 }}
-                defaultPickerValue={[moment().startOf('date'), moment()]}
+                defaultValue={[moment().startOf('date'), moment()]}
                 placeholder={['开始时间', '结束时间']}
               />
               <Form.Item label='用能单位'>
