@@ -49,6 +49,7 @@ const PageDataMeter: React.FunctionComponent = (): JSX.Element => {
   const [energy, setEnergy] = useState('电')
   const [selectedRowKeys, setSelectedRowKeys] = useState()
   const [modalVisible, setModalVisible] = useState(false)
+  const [modalPointName, setModalPointName] = useState()
   const [modalPointId, setModalPointId] = useState()
   const [itemTree, setItemTree] = useState([])
   const [unitTree, setUnitTree] = useState([])
@@ -73,6 +74,7 @@ const PageDataMeter: React.FunctionComponent = (): JSX.Element => {
     const onClick = () => {
       setModalVisible(true)
       setModalPointId(row.key)
+      setModalPointName(row.point)
     }
     return (
       <a data-key={row.key} onClick={onClick}>
@@ -273,6 +275,7 @@ const PageDataMeter: React.FunctionComponent = (): JSX.Element => {
         </Col>
       </Row>
       <DataHisModal
+        point={modalPointName}
         srcId={modalPointId}
         visible={modalVisible}
         onCancel={hModalCancel}

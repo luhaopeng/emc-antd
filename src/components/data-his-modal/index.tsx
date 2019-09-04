@@ -2,7 +2,18 @@ import { Button, DatePicker, Form, Modal, Select, TreeSelect } from 'antd'
 import { ModalProps } from 'antd/lib/modal'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis
+} from 'recharts'
 import { Data } from '../../api'
+import './index.less'
 
 const { TreeNode, SHOW_PARENT } = TreeSelect
 const { Option } = Select
@@ -15,6 +26,7 @@ interface ITreeSrcItem {
 
 interface IModalProp extends ModalProps {
   srcId: number
+  point: string
 }
 
 const DataHisModal: React.FunctionComponent<IModalProp> = (
@@ -22,6 +34,7 @@ const DataHisModal: React.FunctionComponent<IModalProp> = (
 ): JSX.Element => {
   const [item, setItem] = useState()
   const [itemTree, setItemTree] = useState([])
+  const [lineData, setLineData] = useState([])
 
   const hSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -40,16 +53,30 @@ const DataHisModal: React.FunctionComponent<IModalProp> = (
     setItemTree(data.data)
     setItem('表码')
   }
+  const queryLineDate = async () => {
+    const { data } = await Data.History.PointHis.query()
+    setLineData(data.data)
+  }
+
+  const lineFormatter = (value: number) => [value, '正向有功表码']
+  const lineLegendFormatter = () => '正向有功表码'
 
   const treeDropdownStyle = { maxHeight: 400, overflow: 'auto' }
+  const debounce = 40
 
   useEffect(() => {
     queryItemTree()
+    queryLineDate()
   }, [])
 
   return (
     <Modal
-      title='计量点抄表历史数据'
+      title={
+        <div className='modal-title'>
+          计量点抄表历史数据
+          <span className='modal-sub-title'>{props.point}</span>
+        </div>
+      }
       {...props}
       width={1400}
       style={{ top: 20 }}
@@ -94,7 +121,16 @@ const DataHisModal: React.FunctionComponent<IModalProp> = (
           </Button>
         </Form.Item>
       </Form>
-      <p>point id : {props.srcId}</p>
+      <ResponsiveContainer debounce={debounce} width='100%' height={250}>
+        <LineChart data={lineData}>
+          <CartesianGrid strokeDasharray='3 3' />
+          <XAxis dataKey='time' />
+          <YAxis domain={['auto', 'auto']} />
+          <Tooltip formatter={lineFormatter} />
+          <Legend formatter={lineLegendFormatter} />
+          <Line type='monotone' dataKey='value' stroke='#82ca9d' />
+        </LineChart>
+      </ResponsiveContainer>
     </Modal>
   )
 }

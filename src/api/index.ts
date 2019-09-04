@@ -44,6 +44,9 @@ const Common = {
 }
 
 const Data = {
+  History: {
+    PointHis: new Request('/data/history/point-his.json', '/mock')
+  },
   Meter: {
     DataSrc: new Request('/data/meter/data-src.json', '/mock'),
     ItemTree: new Request('/data/meter/item-tree.json', '/mock'),
