@@ -1,17 +1,8 @@
 import { Button, DatePicker, Form, Modal, Select, TreeSelect } from 'antd'
 import { ModalProps } from 'antd/lib/modal'
+import { Axis, Chart, Geom, Tooltip } from 'bizcharts'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-import {
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis
-} from 'recharts'
 import { Data } from '../../api'
 import './index.less'
 
@@ -58,11 +49,7 @@ const DataHisModal: React.FunctionComponent<IModalProp> = (
     setLineData(data.data)
   }
 
-  const lineFormatter = (value: number) => [value, '正向有功表码']
-  const lineLegendFormatter = () => '正向有功表码'
-
   const treeDropdownStyle = { maxHeight: 400, overflow: 'auto' }
-  const debounce = 40
 
   useEffect(() => {
     queryItemTree()
@@ -78,7 +65,7 @@ const DataHisModal: React.FunctionComponent<IModalProp> = (
         </div>
       }
       {...props}
-      width={1400}
+      width='90%'
       style={{ top: 20 }}
     >
       <Form layout='inline' onSubmit={hSubmit}>
@@ -121,16 +108,29 @@ const DataHisModal: React.FunctionComponent<IModalProp> = (
           </Button>
         </Form.Item>
       </Form>
-      <ResponsiveContainer debounce={debounce} width='100%' height={250}>
-        <LineChart data={lineData}>
-          <CartesianGrid strokeDasharray='3 3' />
-          <XAxis dataKey='time' />
-          <YAxis domain={['auto', 'auto']} />
-          <Tooltip formatter={lineFormatter} />
-          <Legend formatter={lineLegendFormatter} />
-          <Line type='monotone' dataKey='value' stroke='#82ca9d' />
-        </LineChart>
-      </ResponsiveContainer>
+      <Chart
+        height={250}
+        data={lineData}
+        scale={{
+          value: {
+            max: 1200,
+            min: 1100
+          }
+        }}
+        forceFit={true}
+      >
+        <Axis name='time' />
+        <Axis name='value' />
+        <Tooltip crosshairs={{ type: 'y' }} />
+        <Geom type='line' position='time*value' size={2} />
+        <Geom
+          type='point'
+          position='time*value'
+          size={4}
+          shape={'circle'}
+          style={{ lineWidth: 1, stroke: '#fff' }}
+        />
+      </Chart>
     </Modal>
   )
 }
