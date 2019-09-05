@@ -1,14 +1,6 @@
 import { Avatar, Card, Col, Layout, List, Row, Statistic, Tag } from 'antd'
+import { Chart, Geom, Tooltip } from 'bizcharts'
 import React from 'react'
-import {
-  Area,
-  AreaChart,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis
-} from 'recharts'
 import './index.less'
 
 interface IEvent {
@@ -173,8 +165,6 @@ const Homepage: React.FunctionComponent = (): JSX.Element => {
     }
   ]
 
-  const usageFormatter = (value: number) => [value, '月用量']
-  const costFormatter = (value: number) => [value, '月费用']
   const eventListRenderer = (item: IEvent) => (
     <List.Item extra={item.time}>
       <List.Item.Meta
@@ -193,8 +183,7 @@ const Homepage: React.FunctionComponent = (): JSX.Element => {
 
   const statsValueStyle = { fontSize: '30px' }
   const cardBodyStyle = { padding: '20px 24px 8px' }
-
-  const debounce = 40
+  const chartPadding = ['2', '-20'] as [string, string]
 
   return (
     <Layout.Content className='hl-page-wrapper'>
@@ -206,26 +195,15 @@ const Homepage: React.FunctionComponent = (): JSX.Element => {
               value={366798.07}
               valueStyle={statsValueStyle}
             />
-            <ResponsiveContainer debounce={debounce} width='100%' height={46}>
-              <AreaChart
-                data={dataYearElecUse}
-                margin={{
-                  bottom: 5,
-                  left: 0,
-                  right: 0,
-                  top: 5
-                }}
-              >
-                <XAxis dataKey='month' hide={true} />
-                <Tooltip formatter={usageFormatter} />
-                <Area
-                  type='monotone'
-                  dataKey='usage'
-                  stroke='#955fe2'
-                  fill='#955fe2'
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+            <Chart
+              padding={chartPadding}
+              height={46}
+              data={dataYearElecUse}
+              forceFit={true}
+            >
+              <Tooltip crosshairs={{ type: 'y' }} />
+              <Geom type='area' position='month*usage' shape='smooth' />
+            </Chart>
             <div className='card-footer'>月用电量 26,618</div>
           </Card>
         </Col>
@@ -236,27 +214,15 @@ const Homepage: React.FunctionComponent = (): JSX.Element => {
               value={540000.07}
               valueStyle={statsValueStyle}
             />
-            <ResponsiveContainer debounce={debounce} width='100%' height={46}>
-              <LineChart
-                data={dataYearElecCost}
-                margin={{
-                  bottom: 5,
-                  left: 0,
-                  right: 0,
-                  top: 5
-                }}
-              >
-                <XAxis dataKey='month' hide={true} />
-                <Tooltip formatter={costFormatter} />
-                <Line
-                  dot={false}
-                  type='monotone'
-                  dataKey='cost'
-                  stroke='#3aa0ff'
-                  strokeWidth={2}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+            <Chart
+              padding={chartPadding}
+              height={46}
+              data={dataYearElecCost}
+              forceFit={true}
+            >
+              <Tooltip crosshairs={{ type: 'y' }} />
+              <Geom type='line' position='month*cost' size={2} shape='smooth' />
+            </Chart>
             <div className='card-footer'>月用电费 ￥50,000.1</div>
           </Card>
         </Col>
@@ -267,26 +233,15 @@ const Homepage: React.FunctionComponent = (): JSX.Element => {
               value={597.0}
               valueStyle={statsValueStyle}
             />
-            <ResponsiveContainer debounce={debounce} width='100%' height={46}>
-              <AreaChart
-                data={dataYearWaterUse}
-                margin={{
-                  bottom: 5,
-                  left: 0,
-                  right: 0,
-                  top: 5
-                }}
-              >
-                <XAxis dataKey='month' hide={true} />
-                <Tooltip formatter={usageFormatter} />
-                <Area
-                  type='monotone'
-                  dataKey='usage'
-                  stroke='#955fe2'
-                  fill='#955fe2'
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+            <Chart
+              padding={chartPadding}
+              height={46}
+              data={dataYearWaterUse}
+              forceFit={true}
+            >
+              <Tooltip crosshairs={{ type: 'y' }} />
+              <Geom type='area' position='month*usage' shape='smooth' />
+            </Chart>
             <div className='card-footer'>月用水量 51</div>
           </Card>
         </Col>
@@ -297,27 +252,15 @@ const Homepage: React.FunctionComponent = (): JSX.Element => {
               value={2268.6}
               valueStyle={statsValueStyle}
             />
-            <ResponsiveContainer debounce={debounce} width='100%' height={46}>
-              <LineChart
-                data={dataYearWaterCost}
-                margin={{
-                  bottom: 5,
-                  left: 0,
-                  right: 0,
-                  top: 5
-                }}
-              >
-                <XAxis dataKey='month' hide={true} />
-                <Tooltip formatter={costFormatter} />
-                <Line
-                  dot={false}
-                  type='monotone'
-                  dataKey='cost'
-                  stroke='#3aa0ff'
-                  strokeWidth={2}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+            <Chart
+              padding={chartPadding}
+              height={46}
+              data={dataYearWaterCost}
+              forceFit={true}
+            >
+              <Tooltip crosshairs={{ type: 'y' }} />
+              <Geom type='line' position='month*cost' size={2} shape='smooth' />
+            </Chart>
             <div className='card-footer'>月用水费 ￥17.8</div>
           </Card>
         </Col>
