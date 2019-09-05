@@ -1,5 +1,14 @@
-import { Button, DatePicker, Form, Modal, Select, TreeSelect } from 'antd'
+import {
+  Button,
+  DatePicker,
+  Form,
+  Modal,
+  Select,
+  Table,
+  TreeSelect
+} from 'antd'
 import { ModalProps } from 'antd/lib/modal'
+import { ColumnProps } from 'antd/lib/table'
 import { Axis, Chart, Geom, Tooltip } from 'bizcharts'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
@@ -55,9 +64,15 @@ const DataHisModal: React.FunctionComponent<IModalProp> = (
     const { data } = await Data.History.PointHis.query()
     setLineData(data.data)
     setLineColumns({
+      time: { type: 'timeCat', mask: 'YYYY-MM-DD HH:mm:ss' },
       value: Utils.Chart.calcRange(data.data.map((v: IPointData) => v.value))
     })
   }
+
+  const dataColumns: Array<ColumnProps<IPointData>> = [
+    { dataIndex: 'time', title: '采集时间' },
+    { dataIndex: 'value', title: '正向有功表码' }
+  ]
 
   const treeDropdownStyle = { maxHeight: 400, overflow: 'auto' }
 
@@ -118,7 +133,13 @@ const DataHisModal: React.FunctionComponent<IModalProp> = (
           </Button>
         </Form.Item>
       </Form>
-      <Chart height={250} data={lineData} scale={lineColumns} forceFit={true}>
+      <Chart
+        padding='auto'
+        height={200}
+        data={lineData}
+        scale={lineColumns}
+        forceFit={true}
+      >
         <Axis name='time' />
         <Axis name='value' />
         <Tooltip crosshairs={{ type: 'y' }} />
@@ -131,6 +152,13 @@ const DataHisModal: React.FunctionComponent<IModalProp> = (
           style={{ lineWidth: 1, stroke: '#fff' }}
         />
       </Chart>
+      <Table
+        size='middle'
+        bordered={true}
+        columns={dataColumns}
+        dataSource={lineData}
+        pagination={{ pageSize: 5 }}
+      />
     </Modal>
   )
 }
