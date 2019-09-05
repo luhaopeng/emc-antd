@@ -63,4 +63,12 @@ const Data = {
   }
 }
 
-export { Common, Data }
+const Home = {
+  ElecCost: new Request('/home/elec-cost.json', '/mock'),
+  ElecUse: new Request('/home/elec-use.json', '/mock'),
+  Events: new Request('/home/events.json', '/mock'),
+  WaterCost: new Request('/home/water-cost.json', '/mock'),
+  WaterUse: new Request('/home/water-use.json', '/mock')
+}
+
+export { Common, Data, Home }
