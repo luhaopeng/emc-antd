@@ -71,4 +71,11 @@ const Home = {
   WaterUse: new Request('/home/water-use.json', '/mock')
 }
 
-export { Common, Data, Home }
+const Analytics = {
+  PowerFactor: {
+    DataSrc: new Request('/analytics/power-factor/data-src.json', '/mock'),
+    PointData: new Request('/analytics/power-factor/point-data.json', '/mock')
+  }
+}
+
+export { Analytics, Common, Data, Home }
